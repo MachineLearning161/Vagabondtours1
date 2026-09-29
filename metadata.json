@@ -1,0 +1,8 @@
+{
+  "name": "Vagabond Tours & Co. | North Bengal Tourism",
+  "description": "Explore homestays and tour packages across North Bengal (Darjeeling, Dooars, Kalimpong, Kurseong, Lataguri) with Vagabond Tours & Co., Jalpaiguri. Submit enquiries online.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

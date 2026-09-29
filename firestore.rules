@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'chowdhuryrishi75@gmail.com' ||
+        (request.auth.token.email != null && request.auth.token.email.matches('(?i)^chowdhuryrishi75@gmail\\.com$')) ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Homestays: public read for published stays, admin write/manage
+    match /homestays/{homestayId} {
+      allow get: if isValidId(homestayId) && (
+        resource.data.published == true || isAdmin()
+      );
+      allow list: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isValidId(homestayId) && isAdmin();
+    }
+
+    // Tours: public read for published circuits, admin write/manage
+    match /tours/{tourId} {
+      allow get: if isValidId(tourId) && (
+        resource.data.published == true || isAdmin()
+      );
+      allow list: if resource.data.published == true || isAdmin();
+      allow create, update, delete: if isValidId(tourId) && isAdmin();
+    }
+
+    // Offers: public read for active seasonal promotions, admin write/manage
+    match /offers/{offerId} {
+      allow get: if isValidId(offerId) && (
+        resource.data.active == true || isAdmin()
+      );
+      allow list: if resource.data.active == true || isAdmin();
+      allow create, update, delete: if isValidId(offerId) && isAdmin();
+    }
+
+    // Enquiries: Public create with strict validation, read/list/update/delete strictly admin
+    match /enquiries/{enquiryId} {
+      function isValidEnquiry() {
+        let d = incoming();
+        return d.customerName is string && d.customerName.size() > 0 && d.customerName.size() <= 100 &&
+               d.customerPhone is string && d.customerPhone.size() > 0 && d.customerPhone.size() <= 25 &&
+               d.targetTitle is string && d.targetTitle.size() <= 150 &&
+               d.message is string && d.message.size() <= 1500;
+      }
+
+      allow create: if isValidId(enquiryId) && isValidEnquiry();
+      allow list: if isAdmin();
+      allow get, update, delete: if isValidId(enquiryId) && isAdmin();
+    }
+
+    // Website settings
+    match /settings/{settingId} {
+      allow get: if isValidId(settingId);
+      allow list: if true;
+      allow write: if isValidId(settingId) && isAdmin();
+    }
+
+    // Admins registry
+    match /admins/{adminId} {
+      allow read, write: if isValidId(adminId) && isAdmin();
+    }
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "entities": {
+    "Homestay": {
+      "title": "Homestay",
+      "description": "A North Bengal homestay offering authentic local stays.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "slug": { "type": "string", "maxLength": 100 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "location": { "type": "string", "maxLength": 100 },
+        "district": { "type": "string", "maxLength": 100 },
+        "pricePerNight": { "type": "number" },
+        "originalPrice": { "type": "number" },
+        "guestCapacity": { "type": "number" },
+        "bedrooms": { "type": "number" },
+        "bathrooms": { "type": "number" },
+        "coverImage": { "type": "string", "maxLength": 500 },
+        "images": { "type": "array" },
+        "description": { "type": "string", "maxLength": 3000 },
+        "facilities": { "type": "array" },
+        "roomTypes": { "type": "array" },
+        "houseRules": { "type": "array" },
+        "nearbyAttractions": { "type": "array" },
+        "address": { "type": "string", "maxLength": 300 },
+        "published": { "type": "boolean" },
+        "featured": { "type": "boolean" },
+        "hostName": { "type": "string", "maxLength": 100 },
+        "hostStory": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "location", "pricePerNight", "guestCapacity", "published"]
+    },
+    "Tour": {
+      "title": "Tour",
+      "description": "A curated North Bengal tour package.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "slug": { "type": "string", "maxLength": 150 },
+        "tagline": { "type": "string", "maxLength": 250 },
+        "destination": { "type": "string", "maxLength": 100 },
+        "durationDays": { "type": "number" },
+        "durationNights": { "type": "number" },
+        "durationString": { "type": "string", "maxLength": 50 },
+        "startingPrice": { "type": "number" },
+        "coverImage": { "type": "string", "maxLength": 500 },
+        "images": { "type": "array" },
+        "overview": { "type": "string", "maxLength": 3000 },
+        "itinerary": { "type": "array" },
+        "inclusions": { "type": "array" },
+        "exclusions": { "type": "array" },
+        "bestSeason": { "type": "string", "maxLength": 100 },
+        "pickupDrop": { "type": "string", "maxLength": 150 },
+        "published": { "type": "boolean" },
+        "featured": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "destination", "startingPrice", "durationDays", "published"]
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "Special promotional discount or seasonal offer.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 150 },
+        "discountBadge": { "type": "string", "maxLength": 50 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "coverImage": { "type": "string", "maxLength": 500 },
+        "validUntil": { "type": "string", "maxLength": 50 },
+        "targetType": { "type": "string", "maxLength": 50 },
+        "applicableTargetId": { "type": "string", "maxLength": 100 },
+        "applicableTargetName": { "type": "string", "maxLength": 150 },
+        "couponCode": { "type": "string", "maxLength": 50 },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "discountBadge", "validUntil", "active"]
+    },
+    "Enquiry": {
+      "title": "Enquiry",
+      "description": "A customer enquiry for a homestay or tour to initiate WhatsApp conversation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerName": { "type": "string", "maxLength": 100 },
+        "customerPhone": { "type": "string", "maxLength": 25 },
+        "customerEmail": { "type": "string", "maxLength": 100 },
+        "enquiryType": { "type": "string", "maxLength": 50 },
+        "targetId": { "type": "string", "maxLength": 100 },
+        "targetTitle": { "type": "string", "maxLength": 150 },
+        "message": { "type": "string", "maxLength": 1500 },
+        "expectedTravelDate": { "type": "string", "maxLength": 50 },
+        "guestCount": { "type": "number" },
+        "status": { "type": "string", "maxLength": 30 },
+        "adminNotes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerName", "customerPhone", "targetTitle", "message"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "Global website settings and contact numbers.",
+      "type": "object",
+      "properties": {
+        "businessName": { "type": "string", "maxLength": 100 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "location": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "whatsappNumber": { "type": "string", "maxLength": 25 },
+        "email": { "type": "string", "maxLength": 100 },
+        "instagram": { "type": "string", "maxLength": 100 },
+        "address": { "type": "string", "maxLength": 300 },
+        "bannerNotice": { "type": "string", "maxLength": 500 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["businessName", "whatsappNumber", "phone", "email"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Authorized administrator user.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "maxLength": 30 },
+        "addedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/homestays/{homestayId}": {
+      "schema": "Homestay",
+      "description": "North Bengal homestays collection."
+    },
+    "/tours/{tourId}": {
+      "schema": "Tour",
+      "description": "North Bengal tour packages collection."
+    },
+    "/offers/{offerId}": {
+      "schema": "Offer",
+      "description": "Promotional offers and discounts collection."
+    },
+    "/enquiries/{enquiryId}": {
+      "schema": "Enquiry",
+      "description": "Customer enquiries for homestays and tours."
+    },
+    "/settings/{settingId}": {
+      "schema": "Setting",
+      "description": "Global website contact details and settings."
+    },
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Registered admins list."
+    }
+  }
+}
